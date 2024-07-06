@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGPA Calculator</title>
+</head>
+<body>
+
+<h1>CGPA Calculator</h1>
+<link rel="stylesheet" href="style3.css">
+
+<div id="calculator">
+    <h2>CGPA Calculator</h2>
+
+    <div class="total-sub">
+        <label for="totalSemesters">Total Semesters:</label>
+        <input type="number" id="totalSemesters" min="1">
+    </div>
+
+    <table id="semestersContainer">
+        <!-- Subjects will be dynamically added here -->
+    </table>
+
+    <button onclick="addSemestersInputFields()">Add Semesters</button>
+    <button onclick="calculateCGPA()">Calculate CGPA</button>
+
+    <p id="result"></p>
+    <p id="feedback" class="feedback"></p>
+</div>
+
+<script>
+function addSemestersInputFields() {
+    const totalSemesters = document.getElementById('totalSemesters').value;
+    const semestersContainer = document.getElementById('semestersContainer');
+    semestersContainer.innerHTML = ''; // Clear previous fields
+
+    for (let i = 1; i <= totalSemesters; i++) {
+        const semesterInput = document.createElement('div');
+        semesterInput.innerHTML = `
+
+
+         <table>
+        <tr>
+            <th>Semester ${i}</th>
+            <td>
+
+            <label><b>SGPA</b></label><br><br>
+            <input type="number" id="semester${i}SGPA" min="0" max="10" step="1">
+
+            </td>
+
+            
+        </tr>
+        </table>
+
+
+
+            
+        `;
+        semestersContainer.appendChild(semesterInput);
+    }
+}
+
+function calculateCGPA() {
+    const totalSemesters = document.getElementById('totalSemesters').value;
+    let totalSGPA = 0;
+
+    for (let i = 1; i <= totalSemesters; i++) {
+        const sgpa = parseFloat(document.getElementById(`semester${i}SGPA`).value);
+        totalSGPA += sgpa;
+    }
+
+    const cgpa = totalSGPA / totalSemesters;
+    document.getElementById('result').innerText = `Your CGPA is: ${cgpa.toFixed(2)}`;
+}
+</script>
+
+</body>
+</html>
